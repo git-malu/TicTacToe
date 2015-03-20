@@ -16,6 +16,8 @@ public class TicTacToeGame {
     public static Integer sWin = 0;// Set to 1-tie, 2-human win, or 3-android win
     public static Boolean mGameOver = true;
     private static Random mRand = new Random();
+    static Integer mPlayerWon=0,mAndroidWon=0,mTie=0;
+    static Integer mTurnCounter = 0;
 
     public TicTacToeGame() {
         //use singleton instead
