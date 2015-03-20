@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">井字游戏</string>
+    <string name="hello_world">你好世界！</string>
+    <string name="action_settings">设置</string>
+    <string name="you_go_first">你先走</string>
+    <string name="its_androids_turn">轮到安卓了</string>
+    <string name="its_your_turn_x">轮到你了（X）.</string>
+    <string name="its_a_tie">平局！</string>
+    <string name="you_won">你赢了！</string>
+    <string name="android_won">安卓赢了！</string>
+    <string name="button_restart">开始新游戏</string>
+
+</resources>

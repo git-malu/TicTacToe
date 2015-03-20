@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="Start a New Game"
+            android:text="@string/button_restart"
             android:textSize="20sp"
             android:onClick="newGame" >
         </Button>

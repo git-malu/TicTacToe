@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
             mBoardButtons[i].setOnClickListener(new ButtonClickListener(i));
         }
 //---Human goes first
-        mInfoTextView.setText("You go first.");
+        mInfoTextView.setText(getString(R.string.you_go_first));
     }
 
     //---Handles clicks on the game board buttons
@@ -68,25 +68,25 @@ public class MainActivity extends ActionBarActivity {
 //--- If no winner yet, let the computer make a move
                     int winner = mGame.checkForWinner();
                     if (winner == 0) {
-                        mInfoTextView.setText("It's Android's turn.");
+                        mInfoTextView.setText(getString(R.string.its_androids_turn));
                         int move = mGame.getComputerMove();
                         setMove(TicTacToeGame.COMPUTER_PLAYER, move);
                         winner = mGame.checkForWinner();
                     }
                     if (winner == 0) {
                         mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
-                        mInfoTextView.setText("It's your turn (X).");
+                        mInfoTextView.setText(getString(R.string.its_your_turn_x));
                     } else if (winner == 1) {
                         mInfoTextView.setTextColor(Color.rgb(0, 0, 200));
-                        mInfoTextView.setText("It's a tie!");
+                        mInfoTextView.setText(getString(R.string.its_a_tie));
                         mGameOver = true;
                     } else if (winner == 2) {
                         mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
-                        mInfoTextView.setText("You won!");
+                        mInfoTextView.setText(getString(R.string.you_won));
                         mGameOver = true;
                     } else {
                         mInfoTextView.setTextColor(Color.rgb(200, 0, 0));
-                        mInfoTextView.setText("Android won!");
+                        mInfoTextView.setText(getString(R.string.android_won));
                         mGameOver = true;
                     }
                 }
