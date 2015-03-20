@@ -14,7 +14,8 @@ public class TicTacToeGame {
 
     public static final char HUMAN_PLAYER = 'X';
     public static final char COMPUTER_PLAYER = 'O';
-
+    public static char turn;
+    public static char win;
     private Random mRand;
 
     public TicTacToeGame() {
@@ -22,8 +23,8 @@ public class TicTacToeGame {
         // Seed the random number generator
         mRand = new Random();
 
-        char turn = HUMAN_PLAYER;    // Human starts first
-        int  win = 0;                // Set to 1, 2, or 3 when game is over
+        turn = HUMAN_PLAYER;    // Human starts first
+        win = 0;                // Set to 1-tie, 2-human win, or 3-android win
 
     }
     public void clearBoard() {
@@ -56,24 +57,36 @@ public class TicTacToeGame {
         for (int i = 0; i <= 6; i += 3)	{
             if (mBoard[i] == HUMAN_PLAYER &&
                     mBoard[i+1] == HUMAN_PLAYER &&
-                    mBoard[i+2]== HUMAN_PLAYER)
-                return 2;
+                    mBoard[i+2]== HUMAN_PLAYER){
+                win = 2;
+                return 2;//human win
+            }
+
             if (mBoard[i] == COMPUTER_PLAYER &&
                     mBoard[i+1]== COMPUTER_PLAYER &&
-                    mBoard[i+2] == COMPUTER_PLAYER)
-                return 3;
+                    mBoard[i+2] == COMPUTER_PLAYER){
+                win = 3;
+                return 3;//android win
+            }
+
         }
 
         // Check vertical wins
         for (int i = 0; i <= 2; i++) {
             if (mBoard[i] == HUMAN_PLAYER &&
                     mBoard[i+3] == HUMAN_PLAYER &&
-                    mBoard[i+6]== HUMAN_PLAYER)
+                    mBoard[i+6]== HUMAN_PLAYER){
+                win = 2;
                 return 2;//human win
+            }
+
             if (mBoard[i] == COMPUTER_PLAYER &&
                     mBoard[i+3] == COMPUTER_PLAYER &&
-                    mBoard[i+6]== COMPUTER_PLAYER)
+                    mBoard[i+6]== COMPUTER_PLAYER){
+                win = 3;
                 return 3;//android win
+            }
+
         }
 
         // Check for diagonal wins
@@ -82,24 +95,34 @@ public class TicTacToeGame {
                 mBoard[8] == HUMAN_PLAYER) ||
                 (mBoard[2] == HUMAN_PLAYER &&
                         mBoard[4] == HUMAN_PLAYER &&
-                        mBoard[6] == HUMAN_PLAYER))
+                        mBoard[6] == HUMAN_PLAYER)){
+            win = 2;
             return 2;//human win
+        }
+
         if ((mBoard[0] == COMPUTER_PLAYER &&
                 mBoard[4] == COMPUTER_PLAYER &&
                 mBoard[8] == COMPUTER_PLAYER) ||
                 (mBoard[2] == COMPUTER_PLAYER &&
                         mBoard[4] == COMPUTER_PLAYER &&
-                        mBoard[6] == COMPUTER_PLAYER))
+                        mBoard[6] == COMPUTER_PLAYER)){
+            win = 3;
             return 3;//android win
+        }
+
 
         // Check for tie
         for (int i = 0; i < BOARD_SIZE; i++) {
             // If we find a number, then no one has won yet
-            if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER)
-                return 0;//continue the game
+            if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER){
+                win = 0;
+                return 0;//no one win and continue the game
+            }
+
         }
 
         // If we make it through the previous loop, all places are taken, so it's a tie
+        win = 1;
         return 1;//tie
     }
 
