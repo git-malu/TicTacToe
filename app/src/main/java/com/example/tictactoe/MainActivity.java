@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
     // Represents the internal state of the game
-    private TicTacToeGame mGame;
+//    private TicTacToeGame mGame;
     // Buttons making up the board
     private Button[] mBoardButtons;
     // Various text displayed
@@ -21,7 +22,6 @@ public class MainActivity extends ActionBarActivity {
     // Restart Button
     private Button startButton;
     // Game Over
-    Boolean mGameOver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,45 +41,52 @@ public class MainActivity extends ActionBarActivity {
         mBoardButtons[8] = (Button) findViewById(R.id.nine);
         mInfoTextView = (TextView) findViewById(R.id.information);
         mScore = (TextView) findViewById(R.id.score);
-        mGame = new TicTacToeGame();
+
+        startNewGame();//new game, set onClickListeners
+
+        //set the board in both classes.
         if(savedInstanceState != null){
-            CharSequence s;
-            startNewGame();
-            //set the board in both classes.
+            Log.d("saved?", "yes");
+            TicTacToeGame.mGameOver = savedInstanceState.getBoolean("GameOver",true);
+            Character s;
             for (Integer i=0;i<9;i++){
-                 s = savedInstanceState.getCharSequence(i.toString());
-                mBoardButtons[i].setText(s);//getSaved X & O
-                mGame.mBoard[i] = s.toString().charAt(0);
-                if(s.toString().charAt(0)=='X'){
+                s = TicTacToeGame.mBoard[i];
+                Log.d("X",s.toString());
+                //set Button
+                if(s =='X'){//set Button color
+                    mBoardButtons[i].setText(s.toString());//set Button Text
                     mBoardButtons[i].setTextColor(Color.rgb(0, 200, 0));
+                    mBoardButtons[i].setEnabled(false);
+                    Log.d("X","restore X");
                 }
-                else{
+                else if (s == 'O'){
+                    mBoardButtons[i].setText(s.toString());//set Button Text
                     mBoardButtons[i].setTextColor(Color.rgb(200, 0, 0));
+                    mBoardButtons[i].setEnabled(false);
+                    Log.d("O","restore O");
+                }else{
+                    mBoardButtons[i].setText(" ");//set Button Text
+                    Log.d("O","restore empty");
                 }
-                mBoardButtons[i].setEnabled(savedInstanceState.getBoolean(i.toString()+"b"));//getSaved Button state
+//            mBoardButtons[i].setEnabled(savedInstanceState.getBoolean(i.toString()+"b"));//getSaved Button state
             }
-            mInfoTextView.setText(savedInstanceState.getCharSequence("info"));
+            infoDisplay(TicTacToeGame.sWin);
             mScore.setText(TicTacToeGame.sWin.toString());
-            mGameOver = savedInstanceState.getBoolean("GameOver");
         }
-        else{
-            startNewGame();//new game
+        else {
+            Log.d("saved?","no");
         }
-
-
-
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        for(Integer i=0;i<9;i++){
-            outState.putCharSequence(i.toString(),mBoardButtons[i].getText());
-            outState.putBoolean(i.toString()+"b",mBoardButtons[i].isEnabled());
-        }
-        outState.putCharSequence("info",mInfoTextView.getText());
-        outState.putBoolean("GameOver",mGameOver);
-//        outState.put
+//        for(Integer i=0;i<9;i++){
+//            outState.putCharSequence(i.toString(),mBoardButtons[i].getText());
+//            outState.putBoolean(i.toString()+"b",mBoardButtons[i].isEnabled());
+//        }
+//        outState.putCharSequence("info",mInfoTextView.getText());
+        outState.putBoolean("GameOver",TicTacToeGame.mGameOver);
     }
 
     //    @Override
@@ -87,10 +94,9 @@ public class MainActivity extends ActionBarActivity {
 //        super.onSaveInstanceState(outState, outPersistentState);
 //
 //    }
-
     private void startNewGame() {
-        mGameOver = false;
-                mGame.clearBoard();
+        TicTacToeGame.mGameOver = false;
+//        TicTacToeGame.clearBoard();
 //---Reset all buttons
         for (int i = 0; i < mBoardButtons.length; i++) {
             mBoardButtons[i].setText("");
@@ -101,6 +107,24 @@ public class MainActivity extends ActionBarActivity {
         mInfoTextView.setText(getString(R.string.you_go_first));
     }
 
+    private void infoDisplay(int winner){
+        if (winner == 0) {
+            mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
+            mInfoTextView.setText(getString(R.string.its_your_turn_x));
+        } else if (winner == 1) {
+            mInfoTextView.setTextColor(Color.rgb(0, 0, 200));
+            mInfoTextView.setText(getString(R.string.its_a_tie));
+            TicTacToeGame.mGameOver = true;
+        } else if (winner == 2) {
+            mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
+            mInfoTextView.setText(getString(R.string.you_won));
+            TicTacToeGame.mGameOver = true;
+        } else {
+            mInfoTextView.setTextColor(Color.rgb(200, 0, 0));
+            mInfoTextView.setText(getString(R.string.android_won));
+            TicTacToeGame.mGameOver = true;
+        }
+    }
     //---Handles clicks on the game board buttons
     private class ButtonClickListener implements View.OnClickListener {
         int location;
@@ -109,34 +133,22 @@ public class MainActivity extends ActionBarActivity {
         }
         @Override
         public void onClick(View v) {
-
-            if (mGameOver == false) {
+            if (TicTacToeGame.mGameOver == false) {
                 if (mBoardButtons[location].isEnabled()) {
+                    //player move
+                    TicTacToeGame.setMove(TicTacToeGame.HUMAN_PLAYER, location);
                     setMove(TicTacToeGame.HUMAN_PLAYER, location);//X,2
                     //--- If no winner yet, let the computer make a move
-                    int winner = mGame.checkForWinner();
+                    int winner = TicTacToeGame.checkForWinner();
+                    //android move
                     if (winner == 0) {
                         mInfoTextView.setText(getString(R.string.its_androids_turn));
-                        int move = mGame.getComputerMove();
-                        setMove(TicTacToeGame.COMPUTER_PLAYER, move);
-                        winner = mGame.checkForWinner();
+                        int move = TicTacToeGame.getComputerMove();
+                        setMove(TicTacToeGame.COMPUTER_PLAYER, move);//set android move
+                        winner = TicTacToeGame.checkForWinner();
                     }
-                    if (winner == 0) {
-                        mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
-                        mInfoTextView.setText(getString(R.string.its_your_turn_x));
-                    } else if (winner == 1) {
-                        mInfoTextView.setTextColor(Color.rgb(0, 0, 200));
-                        mInfoTextView.setText(getString(R.string.its_a_tie));
-                        mGameOver = true;
-                    } else if (winner == 2) {
-                        mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
-                        mInfoTextView.setText(getString(R.string.you_won));
-                        mGameOver = true;
-                    } else {
-                        mInfoTextView.setTextColor(Color.rgb(200, 0, 0));
-                        mInfoTextView.setText(getString(R.string.android_won));
-                        mGameOver = true;
-                    }
+                    //after android move
+                    infoDisplay(winner);
                 }
             }
             mScore.setText(TicTacToeGame.sWin.toString());
@@ -144,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setMove(char player, int location) {
-        mGame.setMove(player, location);
+//        TicTacToeGame.setMove(player, location);//set on the mBoard
         mBoardButtons[location].setEnabled(false);
         mBoardButtons[location].setText(String.valueOf(player));
         if (player == TicTacToeGame.HUMAN_PLAYER)
@@ -162,6 +174,7 @@ public class MainActivity extends ActionBarActivity {
     //--- OnClickListener for Restart a New Game Button
     public void newGame(View v) {
         startNewGame();
+        TicTacToeGame.clearBoard();
     }
 
     @Override
@@ -170,12 +183,10 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
