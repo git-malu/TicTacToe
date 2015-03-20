@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class TicTacToeGame {
     public static final char OPEN_SPOT = ' ';
     public static final int BOARD_SIZE = 9;
-    private char mBoard[] = {'1','2','3','4','5','6','7','8','9'};
+    char mBoard[] = {'1','2','3','4','5','6','7','8','9'};//the board only android can see!
 
     public static final char HUMAN_PLAYER = 'X';
     public static final char COMPUTER_PLAYER = 'O';
@@ -35,15 +35,15 @@ public class TicTacToeGame {
         mBoard[location] = player;
     }
 
-    private void displayBoard()	{
-        System.out.println();
-        System.out.println(mBoard[0] + " | " + mBoard[1] + " | " + mBoard[2]);
-        System.out.println("-----------");
-        System.out.println(mBoard[3] + " | " + mBoard[4] + " | " + mBoard[5]);
-        System.out.println("-----------");
-        System.out.println(mBoard[6] + " | " + mBoard[7] + " | " + mBoard[8]);
-        System.out.println();
-    }
+//    private void displayBoard()	{
+//        System.out.println();
+//        System.out.println(mBoard[0] + " | " + mBoard[1] + " | " + mBoard[2]);
+//        System.out.println("-----------");
+//        System.out.println(mBoard[3] + " | " + mBoard[4] + " | " + mBoard[5]);
+//        System.out.println("-----------");
+//        System.out.println(mBoard[6] + " | " + mBoard[7] + " | " + mBoard[8]);
+//        System.out.println();
+//    }
 
     // Check for a winner.  Return
     //  0 if no winner or tie yet
@@ -69,11 +69,11 @@ public class TicTacToeGame {
             if (mBoard[i] == HUMAN_PLAYER &&
                     mBoard[i+3] == HUMAN_PLAYER &&
                     mBoard[i+6]== HUMAN_PLAYER)
-                return 2;
+                return 2;//human win
             if (mBoard[i] == COMPUTER_PLAYER &&
                     mBoard[i+3] == COMPUTER_PLAYER &&
                     mBoard[i+6]== COMPUTER_PLAYER)
-                return 3;
+                return 3;//android win
         }
 
         // Check for diagonal wins
@@ -83,24 +83,24 @@ public class TicTacToeGame {
                 (mBoard[2] == HUMAN_PLAYER &&
                         mBoard[4] == HUMAN_PLAYER &&
                         mBoard[6] == HUMAN_PLAYER))
-            return 2;
+            return 2;//human win
         if ((mBoard[0] == COMPUTER_PLAYER &&
                 mBoard[4] == COMPUTER_PLAYER &&
                 mBoard[8] == COMPUTER_PLAYER) ||
                 (mBoard[2] == COMPUTER_PLAYER &&
                         mBoard[4] == COMPUTER_PLAYER &&
                         mBoard[6] == COMPUTER_PLAYER))
-            return 3;
+            return 3;//android win
 
         // Check for tie
         for (int i = 0; i < BOARD_SIZE; i++) {
             // If we find a number, then no one has won yet
             if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER)
-                return 0;
+                return 0;//continue the game
         }
 
         // If we make it through the previous loop, all places are taken, so it's a tie
-        return 1;
+        return 1;//tie
     }
 
     void getUserMove()

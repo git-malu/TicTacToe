@@ -27,8 +27,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mGame = new TicTacToeGame();
-        mBoardButtons = new Button[mGame.BOARD_SIZE];
+        //create the button array.
+        mBoardButtons = new Button[TicTacToeGame.BOARD_SIZE];
+        //wire up the buttons.
         mBoardButtons[0] = (Button) findViewById(R.id.one);
         mBoardButtons[1] = (Button) findViewById(R.id.two);
         mBoardButtons[2] = (Button) findViewById(R.id.three);
@@ -40,8 +41,51 @@ public class MainActivity extends ActionBarActivity {
         mBoardButtons[8] = (Button) findViewById(R.id.nine);
         mInfoTextView = (TextView) findViewById(R.id.information);
         mGame = new TicTacToeGame();
-        startNewGame();
+        if(savedInstanceState != null){
+            CharSequence s;
+            startNewGame();
+            //set the board in both classes.
+            for (Integer i=0;i<9;i++){
+                 s = savedInstanceState.getCharSequence(i.toString());
+                mBoardButtons[i].setText(s);//getSaved X & O
+                mGame.mBoard[i] = s.toString().charAt(0);
+                if(s.toString().charAt(0)=='X'){
+                    mBoardButtons[i].setTextColor(Color.rgb(0, 200, 0));
+                }
+                else{
+                    mBoardButtons[i].setTextColor(Color.rgb(200, 0, 0));
+                }
+                mBoardButtons[i].setEnabled(savedInstanceState.getBoolean(i.toString()+"b"));//getSaved Button state
+            }
+            mInfoTextView.setText(savedInstanceState.getCharSequence("info"));
+            mGameOver = savedInstanceState.getBoolean("GameOver");
+        }
+        else{
+            startNewGame();//new game
+        }
+
+
+
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        for(Integer i=0;i<9;i++){
+            outState.putCharSequence(i.toString(),mBoardButtons[i].getText());
+            outState.putBoolean(i.toString()+"b",mBoardButtons[i].isEnabled());
+        }
+        outState.putCharSequence("info",mInfoTextView.getText());
+        outState.putBoolean("GameOver",mGameOver);
+//        outState.put
+    }
+
+    //    @Override
+//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+//
+//    }
+
     private void startNewGame() {
         mGameOver = false;
                 mGame.clearBoard();
@@ -49,9 +93,9 @@ public class MainActivity extends ActionBarActivity {
         for (int i = 0; i < mBoardButtons.length; i++) {
             mBoardButtons[i].setText("");
             mBoardButtons[i].setEnabled(true);
-            mBoardButtons[i].setOnClickListener(new ButtonClickListener(i));
+            mBoardButtons[i].setOnClickListener(new ButtonClickListener(i));//set up the listeners.
         }
-//---Human goes first
+//---TextView-Human goes first
         mInfoTextView.setText(getString(R.string.you_go_first));
     }
 
@@ -65,7 +109,7 @@ public class MainActivity extends ActionBarActivity {
         public void onClick(View v) {
             if (mGameOver == false) {
                 if (mBoardButtons[location].isEnabled()) {
-                    setMove(TicTacToeGame.HUMAN_PLAYER, location);
+                    setMove(TicTacToeGame.HUMAN_PLAYER, location);//X,2
 //--- If no winner yet, let the computer make a move
                     int winner = mGame.checkForWinner();
                     if (winner == 0) {
@@ -136,6 +180,7 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
         Integer i =getRequestedOrientation();
         Log.d("orientation", i.toString());
+
     }
 }
 
