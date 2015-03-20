@@ -3,7 +3,6 @@ package com.example.tictactoe;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +17,7 @@ public class MainActivity extends ActionBarActivity {
     private Button[] mBoardButtons;
     // Various text displayed
     private TextView mInfoTextView;
+    private TextView mScore;
     // Restart Button
     private Button startButton;
     // Game Over
@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
         mBoardButtons[7] = (Button) findViewById(R.id.eight);
         mBoardButtons[8] = (Button) findViewById(R.id.nine);
         mInfoTextView = (TextView) findViewById(R.id.information);
+        mScore = (TextView) findViewById(R.id.score);
         mGame = new TicTacToeGame();
         if(savedInstanceState != null){
             CharSequence s;
@@ -58,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
                 mBoardButtons[i].setEnabled(savedInstanceState.getBoolean(i.toString()+"b"));//getSaved Button state
             }
             mInfoTextView.setText(savedInstanceState.getCharSequence("info"));
+            mScore.setText(TicTacToeGame.sWin.toString());
             mGameOver = savedInstanceState.getBoolean("GameOver");
         }
         else{
@@ -107,10 +109,11 @@ public class MainActivity extends ActionBarActivity {
         }
         @Override
         public void onClick(View v) {
+
             if (mGameOver == false) {
                 if (mBoardButtons[location].isEnabled()) {
                     setMove(TicTacToeGame.HUMAN_PLAYER, location);//X,2
-//--- If no winner yet, let the computer make a move
+                    //--- If no winner yet, let the computer make a move
                     int winner = mGame.checkForWinner();
                     if (winner == 0) {
                         mInfoTextView.setText(getString(R.string.its_androids_turn));
@@ -136,6 +139,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
             }
+            mScore.setText(TicTacToeGame.sWin.toString());
         }
     }
 
@@ -175,12 +179,12 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Integer i =getRequestedOrientation();
-        Log.d("orientation", i.toString());
-
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Integer i =getRequestedOrientation();
+//        Log.d("orientation", i.toString());
+//
+//    }
 }
 
