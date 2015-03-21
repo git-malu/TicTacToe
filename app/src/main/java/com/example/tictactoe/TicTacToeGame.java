@@ -16,12 +16,12 @@ public class TicTacToeGame {
     public static final char COMPUTER_PLAYER = 'O';
     public static char sTurn ='X';// Human starts first
     public static Integer sWin = 0;// Set to 1-tie, 2-human win, or 3-android win
-    public static Boolean mGameOver = true;
-    private static Random mRand = new Random();
+    public static Boolean sGameOver = true;
+    private static Random sRand = new Random();
 
-    static Integer mPlayerWon=0,mAndroidWon=0,mTie=0;
-    static Integer mTurnCounter = 0;
-    static String mInfo;static ColorStateList mInfoColor;
+    static Integer sPlayerWon =0, sAndroidWon =0,mTie=0;
+    static Integer sTurnCounter = 0;
+    static String sInfo;static ColorStateList sInfoColor;
 
 
     public TicTacToeGame() {
@@ -164,7 +164,7 @@ public class TicTacToeGame {
 //        mBoard[move-1] = HUMAN_PLAYER;
 //    }
 
-//result is kept in the mBoard
+//result is kept in the sBoard
     public static int getComputerMove()
     {
         int move;
@@ -202,7 +202,7 @@ public class TicTacToeGame {
         // Generate random move
         do
         {
-            move = mRand.nextInt(BOARD_SIZE);
+            move = sRand.nextInt(BOARD_SIZE);
         } while (mBoard[move] == HUMAN_PLAYER || mBoard[move] == COMPUTER_PLAYER);
 
         System.out.println("Computer is moving to " + (move + 1));

@@ -11,5 +11,11 @@
     <string name="you_won">You won!</string>
     <string name="android_won">Android won!</string>
     <string name="button_restart">Start a New Game</string>
+    <!--Score Board-->
+    <string name="android_win">Player Win:</string>
+    <string name="player_win">Android Win:</string>
+    <string name="tie">Tie:</string>
+    <string name="highest_score">Highest Score:</string>
+    <string name="remove_highest_score">Remove the highest score</string>
 
 </resources>

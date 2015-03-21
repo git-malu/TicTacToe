@@ -11,5 +11,11 @@
     <string name="you_won">你赢了！</string>
     <string name="android_won">安卓赢了！</string>
     <string name="button_restart">开始新游戏</string>
+    <!--Score Board-->
+    <string name="android_win">玩家获胜：</string>
+    <string name="player_win">安卓获胜：</string>
+    <string name="tie">平局！</string>
+    <string name="highest_score">最高分：</string>
+    <string name="remove_highest_score">Remove the highest score</string>
 
 </resources>
