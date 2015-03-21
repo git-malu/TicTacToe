@@ -71,24 +71,25 @@ public class MainActivity extends ActionBarActivity {
                 }
 //            mBoardButtons[i].setEnabled(savedInstanceState.getBoolean(i.toString()+"b"));//getSaved Button state
             }
-            infoDisplay(TicTacToeGame.sWin);
+            infoDisplayOnResume(TicTacToeGame.sWin);
         }
         else {
             startNewGame();//new game, set onClickListeners
             Log.d("saved?","no");
         }
     }
-//
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-////        for(Integer i=0;i<9;i++){
-////            outState.putCharSequence(i.toString(),mBoardButtons[i].getText());
-////            outState.putBoolean(i.toString()+"b",mBoardButtons[i].isEnabled());
-////        }
-////        outState.putCharSequence("info",mInfoTextView.getText());
-//        outState.putBoolean("GameOver",TicTacToeGame.mGameOver);
-//    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        for(Integer i=0;i<9;i++){
+//            outState.putCharSequence(i.toString(),mBoardButtons[i].getText());
+//            outState.putBoolean(i.toString()+"b",mBoardButtons[i].isEnabled());
+//        }
+//        outState.putCharSequence("info",mInfoTextView.getText());
+        TicTacToeGame.mInfo = mInfoTextView.getText().toString();//save the info to TicTacToe
+        TicTacToeGame.mInfoColor = mInfoTextView.getTextColors();
+    }
 
     //    @Override
 //    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
@@ -115,35 +116,38 @@ public class MainActivity extends ActionBarActivity {
             mInfoTextView.setText(getString(R.string.its_your_turn_x));
         }else{
             TicTacToeGame.clearBoard();
+            mInfoTextView.setText(getString(R.string.you_go_first));
+            mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
+
         }
 //---TextView-Human goes first
-        mInfoTextView.setText(getString(R.string.you_go_first));
         mScore.setText("player win:"+TicTacToeGame.mPlayerWon.toString()
                 +"Android win:"+TicTacToeGame.mAndroidWon.toString()
                 +"Tie:"+TicTacToeGame.mTie.toString());
     }
 //
-    private void infoDisplay(int winner){
+    private void infoDisplayOnResume(int winner){
+        //resume the info TextView
+        mInfoTextView.setText(TicTacToeGame.mInfo);
+        mInfoTextView.setTextColor(TicTacToeGame.mInfoColor);
         if (winner == 0) {
-            mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
             mInfoTextView.setText(getString(R.string.its_your_turn_x));
         } else if (winner == 1) {
-            mInfoTextView.setTextColor(Color.rgb(0, 0, 200));
             mInfoTextView.setText(getString(R.string.its_a_tie));
 //            TicTacToeGame.mGameOver = true;
         } else if (winner == 2) {
-            mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
             mInfoTextView.setText(getString(R.string.you_won));
 //            TicTacToeGame.mGameOver = true;
         } else {
-            mInfoTextView.setTextColor(Color.rgb(200, 0, 0));
             mInfoTextView.setText(getString(R.string.android_won));
 //            TicTacToeGame.mGameOver = true;
         }
+        //resume the score textView
         mScore.setText("player win:"+TicTacToeGame.mPlayerWon.toString()
                 +"Android win:"+TicTacToeGame.mAndroidWon.toString()
                 +"Tie:"+TicTacToeGame.mTie.toString());
     }
+
     //---Handles clicks on the game board buttons
     private class ButtonClickListener implements View.OnClickListener {
         int location;
