@@ -217,7 +217,6 @@ public class MainActivity extends ActionBarActivity {
     //--- OnClickListener for Restart a New Game Button
     public void newGame(View v) {
         startNewGame();
-
     }
 
     @Override

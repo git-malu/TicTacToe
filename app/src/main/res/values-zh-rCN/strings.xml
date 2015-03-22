@@ -14,8 +14,8 @@
     <!--Score Board-->
     <string name="android_win">玩家获胜：</string>
     <string name="player_win">安卓获胜：</string>
-    <string name="tie">平局！</string>
+    <string name="tie">平局:</string>
     <string name="highest_score">最高分：</string>
-    <string name="remove_highest_score">Remove the highest score</string>
+    <string name="remove_highest_score">清除最高分</string>
 
 </resources>

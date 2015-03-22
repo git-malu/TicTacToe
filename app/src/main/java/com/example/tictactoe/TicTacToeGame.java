@@ -11,6 +11,7 @@ public class TicTacToeGame {
 //    public static final char OPEN_SPOT = ' ';
     public static final int BOARD_SIZE = 9;
     public static Character mBoard[] = {'1','2','3','4','5','6','7','8','9'};//the board only android can see!
+    private static Integer[] sCorners ={0,2,6,8};//used for the mBoard[]
 
     public static final char HUMAN_PLAYER = 'X';
     public static final char COMPUTER_PLAYER = 'O';
@@ -169,10 +170,10 @@ public class TicTacToeGame {
     {
         int move;
 
-        // First see if there's a move O can make to win
+        // First see if there's a move that can make to win
         for (int i = 0; i < BOARD_SIZE; i++) {
             if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
-                char curr = mBoard[i];
+                char curr = mBoard[i];//save the current position
                 mBoard[i] = COMPUTER_PLAYER;//move
                 //check if win
                 if (checkForWinner() == 3) {//if android win,not undo it
@@ -195,14 +196,33 @@ public class TicTacToeGame {
                     return i;
                 }
                 else
-                    mBoard[i] = curr;
+                    mBoard[i] = curr;//otherwise undo it.
             }
         }
 
-        // Generate random move
+        if(mBoard[4]!=HUMAN_PLAYER && mBoard[4]!=COMPUTER_PLAYER){
+            mBoard[4] = COMPUTER_PLAYER;
+            return 4;
+        }else if(mBoard[4]==HUMAN_PLAYER) {//walk the corners
+            for (int i = 0; i < 4; i++) {
+                if (mBoard[sCorners[i]] != HUMAN_PLAYER && mBoard[sCorners[i]] != COMPUTER_PLAYER) {
+                    mBoard[sCorners[i]] = COMPUTER_PLAYER;
+                    return sCorners[i];
+                }
+            }
+        }else if(mBoard[4]==COMPUTER_PLAYER){
+            for(int i=1;i<8;i=i+2){
+                if(mBoard[i]!=HUMAN_PLAYER && mBoard[i]!=COMPUTER_PLAYER){
+                    mBoard[i]=COMPUTER_PLAYER;
+                    return i;
+                }
+            }
+        }
+
+        // if undo twice, Generate random move
         do
         {
-            move = sRand.nextInt(BOARD_SIZE);
+            move = sRand.nextInt(BOARD_SIZE);// [0, n)
         } while (mBoard[move] == HUMAN_PLAYER || mBoard[move] == COMPUTER_PLAYER);
 
         System.out.println("Computer is moving to " + (move + 1));
