@@ -107,7 +107,7 @@
             android:id="@+id/score"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="score"
             android:textSize="20sp"/>
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/button_restart"
             android:textSize="20sp"
             android:onClick="newGame" >

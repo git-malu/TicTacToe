@@ -1,8 +1,10 @@
 package com.example.tictactoe;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
     // Represents the internal state of the game
 //    private TicTacToeGame mGame;
+    private String[] mDifficulty = {"null","Easy","Normal","Undefeated"};
     // Buttons making up the board
     private Button[] mBoardButtons;
     // Various text displayed
@@ -102,7 +105,7 @@ public class MainActivity extends ActionBarActivity {
         TicTacToeGame.sTurnCounter++;
         if(TicTacToeGame.sTurnCounter %2==0){
             TicTacToeGame.clearBoard();
-            int move = TicTacToeGame.getComputerMove(2);
+            int move = TicTacToeGame.getComputerMove(Integer.valueOf(TicTacToeGame.sDifficulty));
             setMove(TicTacToeGame.COMPUTER_PLAYER, move);//set android move
             mInfoTextView.setText(getString(R.string.its_your_turn_x));
             mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
@@ -110,9 +113,9 @@ public class MainActivity extends ActionBarActivity {
             TicTacToeGame.clearBoard();
             mInfoTextView.setText(getString(R.string.you_go_first));
             mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
-
         }
 //---TextView-Human goes first
+        readUserSettings();
         displayScoreBoard();
     }
 //
@@ -152,7 +155,7 @@ public class MainActivity extends ActionBarActivity {
                     //android move
                     if (winner == 0) {
                         mInfoTextView.setText(getString(R.string.its_androids_turn));
-                        int move = TicTacToeGame.getComputerMove(2);
+                        int move = TicTacToeGame.getComputerMove(Integer.valueOf(TicTacToeGame.sDifficulty));
                         setMove(TicTacToeGame.COMPUTER_PLAYER, move);//set android move
                         winner = TicTacToeGame.checkForWinner();
                     }
@@ -190,7 +193,8 @@ public class MainActivity extends ActionBarActivity {
         mScore.setText(getString(R.string.android_win)+TicTacToeGame.sPlayerWon.toString()+"\n"
                 +getString(R.string.player_win)+TicTacToeGame.sAndroidWon.toString()+"\n"
                 +getString(R.string.tie)+TicTacToeGame.mTie.toString()+"\n"
-                +getString(R.string.highest_score)+mPref.getInt("highest_score",0));
+                +getString(R.string.highest_score)+mPref.getInt("highest_score",0)+"\n"
+                +getString(R.string.difficulty)+mDifficulty[Integer.valueOf(TicTacToeGame.sDifficulty)]);
     }
     private void saveHighestScore(Integer i){
         if(mPref.getInt("highest_score",0)<i){
@@ -227,6 +231,8 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivityForResult(i, 1);
             return true;
         }else if(id == R.id.clean_highest_score){
             mPrefEditor.putInt("highest_score",0).commit();
@@ -234,6 +240,20 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void readUserSettings(){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        TicTacToeGame.sDifficulty = pref.getString("AI","2");
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                readUserSettings();
+                displayScoreBoard();
+                break;
+        }
     }
 }
 

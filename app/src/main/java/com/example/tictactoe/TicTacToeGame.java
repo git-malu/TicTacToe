@@ -19,6 +19,7 @@ public class TicTacToeGame {
     public static Integer sWin = 0;// Set to 1-tie, 2-human win, or 3-android win
     public static Boolean sGameOver = true;
     private static Random sRand = new Random();
+    public static String sDifficulty = "2";//normal at beginning
 
     static Integer sPlayerWon =0, sAndroidWon =0,mTie=0;
     static Integer sTurnCounter = 0;

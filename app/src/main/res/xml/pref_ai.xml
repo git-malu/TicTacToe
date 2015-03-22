@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="GAME Settings">
+        <ListPreference
+            android:key="AI"
+            android:title="AI-Selection"
+            android:summary="Easy-random steps\nNormal-original AI\nUndefeated-Android Never Loose"
+            android:entries="@array/AI_selection_title"
+            android:entryValues="@array/AI_selection_value">
+        </ListPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

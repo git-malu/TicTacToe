@@ -17,5 +17,6 @@
     <string name="tie">Tie:</string>
     <string name="highest_score">Highest Score:</string>
     <string name="remove_highest_score">Remove the highest score</string>
+    <string name="difficulty">Difficulty: </string>
 
 </resources>

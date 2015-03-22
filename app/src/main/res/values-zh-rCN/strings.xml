@@ -17,5 +17,6 @@
     <string name="tie">平局:</string>
     <string name="highest_score">最高分：</string>
     <string name="remove_highest_score">清除最高分</string>
+    <string name="difficulty">难度: </string>
 
 </resources>
