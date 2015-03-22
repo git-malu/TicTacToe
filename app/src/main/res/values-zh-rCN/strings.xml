@@ -18,5 +18,8 @@
     <string name="highest_score">最高分：</string>
     <string name="remove_highest_score">清除最高分</string>
     <string name="difficulty">难度: </string>
+    <string name="easy">简单</string>
+    <string name="normal">普通</string>
+    <string name="undefeated">不败</string>
 
 </resources>

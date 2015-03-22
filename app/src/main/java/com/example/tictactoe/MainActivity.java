@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
     // Represents the internal state of the game
 //    private TicTacToeGame mGame;
-    private String[] mDifficulty = {"null","Easy","Normal","Undefeated"};
+    private String[] mDifficulty = {"","","",""};
     // Buttons making up the board
     private Button[] mBoardButtons;
     // Various text displayed
@@ -32,6 +32,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDifficulty[1] = getString(R.string.easy);
+        mDifficulty[2] = getString(R.string.normal);
+        mDifficulty[3] = getString(R.string.undefeated);
         mPref = getSharedPreferences("TicTacToe",MODE_PRIVATE);
         mPrefEditor = mPref.edit();
         //create the button array.

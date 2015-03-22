@@ -18,5 +18,8 @@
     <string name="highest_score">Highest Score:</string>
     <string name="remove_highest_score">Remove the highest score</string>
     <string name="difficulty">Difficulty: </string>
+    <string name="easy">Easy</string>
+    <string name="normal">Normal</string>
+    <string name="undefeated">Undefeated</string>
 
 </resources>

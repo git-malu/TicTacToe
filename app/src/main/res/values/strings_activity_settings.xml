@@ -1,9 +1,9 @@
 <resources>
     <string name="title_activity_settings">Settings</string>
     <string-array name="AI_selection_title">
-        <item>Easy</item>
-        <item>Normal</item>
-        <item>Undefeated</item>
+        <item>@string/easy</item>
+        <item>@string/normal</item>
+        <item>@string/undefeated</item>
     </string-array>
     <string-array name="AI_selection_value">
         <item>1</item>
