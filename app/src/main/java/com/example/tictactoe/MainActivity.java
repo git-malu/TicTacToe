@@ -106,6 +106,7 @@ public class MainActivity extends ActionBarActivity {
 //---Reset all buttons
         setListeners();
         TicTacToeGame.sTurnCounter++;
+        //who first
         if(TicTacToeGame.sTurnCounter %2==0){
             TicTacToeGame.clearBoard();
             int move = TicTacToeGame.getComputerMove(Integer.valueOf(TicTacToeGame.sDifficulty));
@@ -126,15 +127,6 @@ public class MainActivity extends ActionBarActivity {
         //resume the info TextView
         mInfoTextView.setText(TicTacToeGame.sInfo);
         mInfoTextView.setTextColor(TicTacToeGame.sInfoColor);
-        if (winner == 0) {
-            mInfoTextView.setText(getString(R.string.its_your_turn_x));
-        } else if (winner == 1) {
-            mInfoTextView.setText(getString(R.string.its_a_tie));
-        } else if (winner == 2) {
-            mInfoTextView.setText(getString(R.string.you_won));
-        } else {
-            mInfoTextView.setText(getString(R.string.android_won));
-        }
         //resume the score textView
         displayScoreBoard();
     }

@@ -38,16 +38,6 @@ public class TicTacToeGame {
         mBoard[location] = player;
     }
 
-//    private void displayBoard()	{
-//        System.out.println();
-//        System.out.println(mBoard[0] + " | " + mBoard[1] + " | " + mBoard[2]);
-//        System.out.println("-----------");
-//        System.out.println(mBoard[3] + " | " + mBoard[4] + " | " + mBoard[5]);
-//        System.out.println("-----------");
-//        System.out.println(mBoard[6] + " | " + mBoard[7] + " | " + mBoard[8]);
-//        System.out.println();
-//    }
-
     // Check for a winner.  Return
     //  0 if no winner or tie yet
     //  1 if it's a tie
@@ -202,21 +192,31 @@ public class TicTacToeGame {
         }
         if(AI==3) {
             //the key to be undefeated.
+            //take the middle
             if (mBoard[4] != HUMAN_PLAYER && mBoard[4] != COMPUTER_PLAYER) {
                 mBoard[4] = COMPUTER_PLAYER;
                 return 4;
-            } else if (mBoard[4] == HUMAN_PLAYER) {//walk the corners
+            } else if (mBoard[4] == HUMAN_PLAYER) {//take the corners
                 for (int i = 0; i < 4; i++) {
                     if (mBoard[sCorners[i]] != HUMAN_PLAYER && mBoard[sCorners[i]] != COMPUTER_PLAYER) {
                         mBoard[sCorners[i]] = COMPUTER_PLAYER;
                         return sCorners[i];
                     }
                 }
-            } else if (mBoard[4] == COMPUTER_PLAYER) {
-                for (int i = 1; i < 8; i = i + 2) {
-                    if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
-                        mBoard[i] = COMPUTER_PLAYER;
-                        return i;
+            } else if (mBoard[4] == COMPUTER_PLAYER) {//take the cross
+                if(sTurnCounter%2 == 0){
+                    for (int i = 0; i < 4; i++) {
+                        if (mBoard[sCorners[i]] != HUMAN_PLAYER && mBoard[sCorners[i]] != COMPUTER_PLAYER) {
+                            mBoard[sCorners[i]] = COMPUTER_PLAYER;
+                            return sCorners[i];
+                        }
+                    }
+                }else{
+                    for (int i = 1; i < 8; i = i + 2) {
+                        if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
+                            mBoard[i] = COMPUTER_PLAYER;
+                            return i;
+                        }
                     }
                 }
             }
