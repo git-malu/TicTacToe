@@ -165,60 +165,61 @@ public class TicTacToeGame {
 //        mBoard[move-1] = HUMAN_PLAYER;
 //    }
 
-//result is kept in the sBoard
-    public static int getComputerMove()
+//result is kept in the sBoard, and returned too
+    public static int getComputerMove(int AI)
     {
         int move;
 
-        // First see if there's a move that can make to win
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
-                char curr = mBoard[i];//save the current position
-                mBoard[i] = COMPUTER_PLAYER;//move
-                //check if win
-                if (checkForWinner() == 3) {//if android win,not undo it
-                    System.out.println("Computer is moving to " + (i + 1));
-                    return i;
+        if(AI!=1) {
+            // First see if there's a move that can make to win
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
+                    char curr = mBoard[i];//save the current position
+                    mBoard[i] = COMPUTER_PLAYER;//move
+                    //check if win
+                    if (checkForWinner() == 3) {//if android win,not undo it
+                        System.out.println("Computer is moving to " + (i + 1));
+                        return i;
+                    } else
+                        mBoard[i] = curr;//otherwise undo it
                 }
-                else
-                    mBoard[i] = curr;//otherwise undo it
             }
-        }
 
-        // See if there's a move O can make to block X from winning
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
-                char curr = mBoard[i];   // Save the current number
-                mBoard[i] = HUMAN_PLAYER;
-                if (checkForWinner() == 2) {
-                    mBoard[i] = COMPUTER_PLAYER;
-                    System.out.println("Computer is moving to " + (i + 1));
-                    return i;
-                }
-                else
-                    mBoard[i] = curr;//otherwise undo it.
-            }
-        }
-
-        if(mBoard[4]!=HUMAN_PLAYER && mBoard[4]!=COMPUTER_PLAYER){
-            mBoard[4] = COMPUTER_PLAYER;
-            return 4;
-        }else if(mBoard[4]==HUMAN_PLAYER) {//walk the corners
-            for (int i = 0; i < 4; i++) {
-                if (mBoard[sCorners[i]] != HUMAN_PLAYER && mBoard[sCorners[i]] != COMPUTER_PLAYER) {
-                    mBoard[sCorners[i]] = COMPUTER_PLAYER;
-                    return sCorners[i];
-                }
-            }
-        }else if(mBoard[4]==COMPUTER_PLAYER){
-            for(int i=1;i<8;i=i+2){
-                if(mBoard[i]!=HUMAN_PLAYER && mBoard[i]!=COMPUTER_PLAYER){
-                    mBoard[i]=COMPUTER_PLAYER;
-                    return i;
+            // See if there's a move O can make to block X from winning
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
+                    char curr = mBoard[i];   // Save the current number
+                    mBoard[i] = HUMAN_PLAYER;
+                    if (checkForWinner() == 2) {
+                        mBoard[i] = COMPUTER_PLAYER;
+                        System.out.println("Computer is moving to " + (i + 1));
+                        return i;
+                    } else
+                        mBoard[i] = curr;//otherwise undo it.
                 }
             }
         }
-
+        if(AI==3) {
+            //the key to be undefeated.
+            if (mBoard[4] != HUMAN_PLAYER && mBoard[4] != COMPUTER_PLAYER) {
+                mBoard[4] = COMPUTER_PLAYER;
+                return 4;
+            } else if (mBoard[4] == HUMAN_PLAYER) {//walk the corners
+                for (int i = 0; i < 4; i++) {
+                    if (mBoard[sCorners[i]] != HUMAN_PLAYER && mBoard[sCorners[i]] != COMPUTER_PLAYER) {
+                        mBoard[sCorners[i]] = COMPUTER_PLAYER;
+                        return sCorners[i];
+                    }
+                }
+            } else if (mBoard[4] == COMPUTER_PLAYER) {
+                for (int i = 1; i < 8; i = i + 2) {
+                    if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
+                        mBoard[i] = COMPUTER_PLAYER;
+                        return i;
+                    }
+                }
+            }
+        }
         // if undo twice, Generate random move
         do
         {

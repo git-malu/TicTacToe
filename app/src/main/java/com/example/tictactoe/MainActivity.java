@@ -102,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
         TicTacToeGame.sTurnCounter++;
         if(TicTacToeGame.sTurnCounter %2==0){
             TicTacToeGame.clearBoard();
-            int move = TicTacToeGame.getComputerMove();
+            int move = TicTacToeGame.getComputerMove(2);
             setMove(TicTacToeGame.COMPUTER_PLAYER, move);//set android move
             mInfoTextView.setText(getString(R.string.its_your_turn_x));
             mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
                     //android move
                     if (winner == 0) {
                         mInfoTextView.setText(getString(R.string.its_androids_turn));
-                        int move = TicTacToeGame.getComputerMove();
+                        int move = TicTacToeGame.getComputerMove(2);
                         setMove(TicTacToeGame.COMPUTER_PLAYER, move);//set android move
                         winner = TicTacToeGame.checkForWinner();
                     }
