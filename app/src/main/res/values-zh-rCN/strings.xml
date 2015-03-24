@@ -21,8 +21,8 @@
     <string name="easy">简单</string>
     <string name="normal">普通</string>
     <string name="undefeated">不败</string>
-    <string name="option_menu_help">Help</string>
-    <string name="dialog_help_title">How to play?</string>
-    <string name="dialog_help_message">play like this</string>
+    <string name="option_menu_help">帮助</string>
+    <string name="dialog_help_title">游戏方法</string>
+    <string name="dialog_help_message">首先成功在水平方向，垂直方向，或者对角方向放置三个标记的玩家取得胜利。</string>
 
 </resources>
