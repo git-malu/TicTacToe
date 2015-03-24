@@ -21,5 +21,8 @@
     <string name="easy">简单</string>
     <string name="normal">普通</string>
     <string name="undefeated">不败</string>
+    <string name="option_menu_help">Help</string>
+    <string name="dialog_help_title">How to play?</string>
+    <string name="dialog_help_message">play like this</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.example.tictactoe;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -232,6 +234,16 @@ public class MainActivity extends ActionBarActivity {
         }else if(id == R.id.clean_highest_score){
             mPrefEditor.putInt("highest_score",0).commit();
             displayScoreBoard();
+        }else if(id == R.id.option_menu_help){
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.dialog_help_title))
+                    .setMessage(getString(R.string.dialog_help_message))
+                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).show();
         }
 
         return super.onOptionsItemSelected(item);

@@ -21,5 +21,8 @@
     <string name="easy">Easy</string>
     <string name="normal">Normal</string>
     <string name="undefeated">Undefeated</string>
+    <string name="option_menu_help">Help</string>
+    <string name="dialog_help_title">How to play ?</string>
+    <string name="dialog_help_message">The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.</string>
 
 </resources>
