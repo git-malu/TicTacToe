@@ -24,5 +24,7 @@
     <string name="option_menu_help">帮助</string>
     <string name="dialog_help_title">游戏方法</string>
     <string name="dialog_help_message">首先成功在水平方向，垂直方向，或者对角方向放置三个标记的玩家取得胜利。</string>
-
+    <string name="AI_selection">难度选择</string>
+    <string name="AI_summary">简单--随机落子\n普通-没有修改时的难度\n不败-你赢不了它的</string>
+    <string name="preference_title_game_setting">游戏设置</string>
 </resources>

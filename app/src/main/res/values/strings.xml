@@ -24,5 +24,8 @@
     <string name="option_menu_help">Help</string>
     <string name="dialog_help_title">How to play ?</string>
     <string name="dialog_help_message">The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.</string>
+    <string name="AI_selection">AI-Selection</string>
+    <string name="AI_summary">Easy-random steps\nNormal-original AI\nUndefeated-Android Never Loose</string>
+    <string name="preference_title_game_setting">GAME Settings</string>
 
 </resources>
