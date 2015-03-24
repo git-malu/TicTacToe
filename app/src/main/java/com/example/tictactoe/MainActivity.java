@@ -98,7 +98,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         TicTacToeGame.sInfoColor = mInfoTextView.getTextColors();
-        TicTacToeGame.sInfo = mInfoTextView.getText().toString();//save the info to TicTacToe
+//        TicTacToeGame.sInfo = mInfoTextView.getText().toString();//save the info to TicTacToe
         return;
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
         if(TicTacToeGame.sInfoColor != null){
             mInfoTextView.setTextColor(TicTacToeGame.sInfoColor);
         }
-        mInfoTextView.setText(TicTacToeGame.sInfo);
+        mInfoTextView.setText(TicTacToeGame.sInfoID);
 
         //resume the score textView
         displayScoreBoard();
@@ -173,12 +173,12 @@ public class MainActivity extends ActionBarActivity {
                     if (winner == 0) {
                         mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
                         mInfoTextView.setText(getString(R.string.its_your_turn_x));
-                        TicTacToeGame.sInfo = getString(R.string.its_your_turn_x);
+                        TicTacToeGame.sInfoID = R.string.its_your_turn_x;
 
                     } else if (winner == 1) {
                         mInfoTextView.setTextColor(Color.rgb(0, 0, 200));
                         mInfoTextView.setText(getString(R.string.its_a_tie));
-                        TicTacToeGame.sInfo = getString(R.string.its_a_tie);
+                        TicTacToeGame.sInfoID = R.string.its_a_tie;
                         //sound effect
                         Uri uri = Uri.parse("android.resource://"+ getPackageName() + "/" + R.raw.tribe);
                         mSoundPlayer.play(MainActivity.this, uri, false,
@@ -190,7 +190,7 @@ public class MainActivity extends ActionBarActivity {
                     } else if (winner == 2) {
                         mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
                         mInfoTextView.setText(getString(R.string.you_won));
-                        TicTacToeGame.sInfo = getString(R.string.you_won);
+                        TicTacToeGame.sInfoID = R.string.you_won;
                         //sound effect
                         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dingdong);
                         mSoundPlayer.play(MainActivity.this, uri, false,
@@ -203,7 +203,7 @@ public class MainActivity extends ActionBarActivity {
                     } else {
                         mInfoTextView.setTextColor(Color.rgb(200, 0, 0));
                         mInfoTextView.setText(getString(R.string.android_won));
-                        TicTacToeGame.sInfo = getString(R.string.android_won);
+                        TicTacToeGame.sInfoID = R.string.android_won;
                         //sound effect
                         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.vibration);
                         mSoundPlayer.play(MainActivity.this, uri, false,

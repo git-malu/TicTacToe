@@ -24,6 +24,7 @@ public class TicTacToeGame {
     static Integer sPlayerWon =0, sAndroidWon =0,mTie=0;
     static Integer sTurnCounter = 0;
     static String sInfo;static ColorStateList sInfoColor;
+    static int sInfoID;
 
 
     public TicTacToeGame() {
