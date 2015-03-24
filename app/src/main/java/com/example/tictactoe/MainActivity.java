@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AsyncPlayer;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -30,10 +33,12 @@ public class MainActivity extends ActionBarActivity {
     // Game Over
     SharedPreferences mPref;
     SharedPreferences.Editor mPrefEditor;
+    private AsyncPlayer mSoundPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mSoundPlayer = new AsyncPlayer(getPackageName());
         mDifficulty[1] = getString(R.string.easy);
         mDifficulty[2] = getString(R.string.normal);
         mDifficulty[3] = getString(R.string.undefeated);
@@ -81,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
                     Log.d("O","restore empty");
                 }
             }
-            infoDisplayOnResume(TicTacToeGame.sWin);
+            infoDisplayOnResume();
         }
         else {
             startNewGame();//new game, set onClickListeners
@@ -92,8 +97,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        TicTacToeGame.sInfo = mInfoTextView.getText().toString();//save the info to TicTacToe
         TicTacToeGame.sInfoColor = mInfoTextView.getTextColors();
+        TicTacToeGame.sInfo = mInfoTextView.getText().toString();//save the info to TicTacToe
+        return;
     }
 
     private void setListeners(){
@@ -125,12 +131,16 @@ public class MainActivity extends ActionBarActivity {
         displayScoreBoard();
     }
 //
-    private void infoDisplayOnResume(int winner){
+    private void infoDisplayOnResume(){
         //resume the info TextView
+        if(TicTacToeGame.sInfoColor != null){
+            mInfoTextView.setTextColor(TicTacToeGame.sInfoColor);
+        }
         mInfoTextView.setText(TicTacToeGame.sInfo);
-        mInfoTextView.setTextColor(TicTacToeGame.sInfoColor);
+
         //resume the score textView
         displayScoreBoard();
+        return;
     }
 
     //---Handles clicks on the game board buttons
@@ -141,6 +151,9 @@ public class MainActivity extends ActionBarActivity {
         }
         @Override
         public void onClick(View v) {
+            Uri uri_rec = Uri.parse("android.resource://"+ getPackageName() + "/" + R.raw.recvfile);
+            mSoundPlayer.play(MainActivity.this, uri_rec, false,
+                    AudioManager.STREAM_MUSIC);
             if (TicTacToeGame.sGameOver == false) {
                 if (mBoardButtons[location].isEnabled()) {
                     //player move
@@ -160,15 +173,29 @@ public class MainActivity extends ActionBarActivity {
                     if (winner == 0) {
                         mInfoTextView.setTextColor(Color.rgb(0, 0, 0));
                         mInfoTextView.setText(getString(R.string.its_your_turn_x));
+                        TicTacToeGame.sInfo = getString(R.string.its_your_turn_x);
+
                     } else if (winner == 1) {
                         mInfoTextView.setTextColor(Color.rgb(0, 0, 200));
                         mInfoTextView.setText(getString(R.string.its_a_tie));
+                        TicTacToeGame.sInfo = getString(R.string.its_a_tie);
+                        //sound effect
+                        Uri uri = Uri.parse("android.resource://"+ getPackageName() + "/" + R.raw.tribe);
+                        mSoundPlayer.play(MainActivity.this, uri, false,
+                                AudioManager.STREAM_MUSIC);
+                        //
                         TicTacToeGame.sGameOver = true;
                         TicTacToeGame.mTie++;
                         saveHighestScore(TicTacToeGame.sPlayerWon);
                     } else if (winner == 2) {
                         mInfoTextView.setTextColor(Color.rgb(0, 200, 0));
                         mInfoTextView.setText(getString(R.string.you_won));
+                        TicTacToeGame.sInfo = getString(R.string.you_won);
+                        //sound effect
+                        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dingdong);
+                        mSoundPlayer.play(MainActivity.this, uri, false,
+                                AudioManager.STREAM_MUSIC);
+                        //
                         TicTacToeGame.sGameOver = true;
                         TicTacToeGame.sPlayerWon++;
                         saveHighestScore(TicTacToeGame.sPlayerWon);
@@ -176,6 +203,12 @@ public class MainActivity extends ActionBarActivity {
                     } else {
                         mInfoTextView.setTextColor(Color.rgb(200, 0, 0));
                         mInfoTextView.setText(getString(R.string.android_won));
+                        TicTacToeGame.sInfo = getString(R.string.android_won);
+                        //sound effect
+                        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.vibration);
+                        mSoundPlayer.play(MainActivity.this, uri, false,
+                                AudioManager.STREAM_MUSIC);
+                        //
                         TicTacToeGame.sGameOver = true;
                         TicTacToeGame.sAndroidWon++;
                         saveHighestScore(TicTacToeGame.sPlayerWon);
